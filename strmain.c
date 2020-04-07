@@ -1,5 +1,6 @@
 #include "header.h"
 #include <stdio.h>
+#include <stdlib.h>
 /**
  * 
  * main - check for split function
@@ -18,8 +19,9 @@ int main(void)
     array = split(buffer, n);
     while (array[i])
     {
-        printf("--> %s\n", array[i]);
+        printf("%d--> %s\n", n, array[i]);
         i++;
     }
+    free(buffer);
     return (0);
 }

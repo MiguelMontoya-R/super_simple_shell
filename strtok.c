@@ -9,11 +9,21 @@
 */
 char **split(char *str, int n)
 { 
+    if (str == NULL)
+    {
+        dprintf(STDERR_FILENO, "Anything\n");
+        exit(98);
+    }
     char **array;
     char *token;
     int i = 0;
     
-    array = malloc(sizeof(char *) * n);
+    array = malloc(sizeof(char) * n);
+    if (array == NULL)
+    {
+        free(array);
+        exit(98);
+    }
     token = strtok(str, " ");
     while (token)
     {
