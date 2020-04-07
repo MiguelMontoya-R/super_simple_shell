@@ -11,13 +11,12 @@ int main(void)
 {
     char *argv[] = {"/bin/ls", "-l", "/tmp/", NULL};
     pid_t child_pid;
+    pid_t parent_pid;
     int i = 0;
     int status;
 
     while (i < 5)
     {
-        if (execve(argv[0], argv, NULL) == -1)
-            perror("Error:");
         child_pid = fork();
         if (child_pid == -1)
         {
@@ -25,13 +24,21 @@ int main(void)
             return (1);
         }
         if (child_pid == 0)
-            printf("Executing fork\n");
+	{
+		if (execve(argv[0], argv, NULL) == -1)
+		{
+			perror("Error:");
+		}
+
+		printf("Executing fork\n");
+	}
         else
         {
             wait(&status);
             printf("Waiting proccess passed\n");
-        }            
-        printf("%u\n", child_pid);
+        }
+	parent_pid = getppid();            
+        printf("parent-> %u and child-> %u\n", parent_pid, child_pid);
         i++;
     }
     return(0);
