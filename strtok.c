@@ -9,15 +9,15 @@
 */
 char **split(char *str, int n)
 { 
+    char **array;
+    char *token;
+    int i = 0;
+
     if (str == NULL)
     {
         dprintf(STDERR_FILENO, "Anything\n");
         exit(98);
-    }
-    char **array;
-    char *token;
-    int i = 0;
-    
+    }    
     array = malloc(sizeof(char) * n);
     if (array == NULL)
     {
