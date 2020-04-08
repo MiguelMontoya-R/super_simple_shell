@@ -31,7 +31,6 @@ int main(void)
 		i++;
 	}
 	array[i] = NULL;
-	printf("%s", buffer);
 	child_pid = fork();
 	if (child_pid == 0)
 	{
