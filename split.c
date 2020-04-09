@@ -13,22 +13,17 @@ char **split(char *str, int n)
     char *token;
     int i = 0;
 
-    if (str == NULL)
-    {
-        dprintf(STDERR_FILENO, "Anything\n");
-        exit(98);
-    }    
     array = malloc(sizeof(char) * n);
     if (array == NULL)
     {
         free(array);
         exit(98);
     }
-    token = strtok(str, " \n");
+    token = strtok(str, "\n");
     while (token)
     {
         array[i] = token;
-        token = strtok(NULL,  " \n");
+        token = strtok(NULL, " ");
         i++;
     }
     array[i] = NULL;

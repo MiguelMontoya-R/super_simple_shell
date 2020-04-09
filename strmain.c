@@ -22,6 +22,8 @@ int main(void)
         printf("%d--> %s\n", n, array[i]);
         i++;
     }
+
     free(buffer);
+    free(array);
     return (0);
 }
