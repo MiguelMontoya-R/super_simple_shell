@@ -14,32 +14,33 @@ int main(void)
 {
 	char *buffer = NULL;
 	size_t buffsize = 0;
-	char *array[1024];
-	char *token;
-	int i = 0;
+	char **token;
 	pid_t child_pid;
+	int n;
+	int i = 0;
 	int status;
 
 	printf("#cisfun$ ");
-	if (getline(&buffer, &buffsize, stdin) == -1)
-		perror("Error");
-	token = strtok(buffer, " \n");
-	while (token)
+	while ((n = getline(&buffer, &buffsize, stdin)) != -1)
 	{
-		array[i] = token;
-		token = strtok(NULL, " \n");
-		i++;
+		token = split(buffer, n);
+		while(token[i])
+		{
+			printf("%s\n", token[i]);
+			i++;
+		}
+		child_pid = fork();
+		if (child_pid == 0)
+		{
+			if (execve(token[0], token, NULL) == -1)
+				perror("Error");
+		}
+		else
+			wait(&status);
+		
+		free(token);
+		free(buffer);
+		printf("#cisfun$ ");
 	}
-	array[i] = NULL;
-	child_pid = fork();
-	if (child_pid == 0)
-	{
-		if (execve(array[0], array, NULL) == -1)
-			perror("Error");
-	}
-	else
-		wait(&status);
-
-	free(buffer);
 	return (0);
 }
